@@ -2,6 +2,14 @@ import sys
 import json
 import datetime
 
+"""
+USAGE:
+
+In terminal run script without argument to get a string-list of names that have namedays today.
+In terminal run script with argument (name in genitive form, e.g. Joanny, Błażeja) to get a string-list of date when 
+current name has a namedays.
+"""
+
 
 def open_file(file: str):
     """
