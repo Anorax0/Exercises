@@ -2,11 +2,18 @@ import sys
 import json
 import datetime
 
+"""
+USAGE:
+
+In terminal run script without argument to get a string-list of names that have namedays today.
+In terminal run script with argument (name in genitive form, e.g. Joanny, Błażeja) to get a string-list of date when 
+current name has a namedays.
+"""
+
 
 class NameDays:
     def __init__(self, name=None):
         self.name = name
-        self._type = self._check_type()
         self._json_file = self.load_file('imieniny.json')
 
     @staticmethod
@@ -21,16 +28,6 @@ class NameDays:
                 return json.load(json_file)
         except FileNotFoundError:
             return 'File cannot be found.'
-
-    def _check_type(self):
-        """
-        Checks whenever name is given or not
-        :return: boolean
-        """
-        if self.name:
-            return True
-        else:
-            return False
 
     def search_nameday_by_name(self) -> str:
         """
@@ -60,8 +57,14 @@ class NameDays:
         date = datetime.datetime.today().strftime('%d-%m')
         return ", ".join(self._json_file[date])
 
+    def search_nameday_by_date(self, date):
+        if date[2] == '-':
+            return ", ".join(self._json_file[date])
+        else:
+            return 'Incorrect date format. Please use dd-mm.'
+
     def __str__(self):
-        if self._type is True:
+        if self.name is not None:
             return self.search_nameday_by_name()
         else:
             return self.search_nameday_by_today()
